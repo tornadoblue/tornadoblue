@@ -1,14 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
-import Fade from 'react-reveal/Fade';
+import { Fade } from 'react-awesome-reveal'; // Updated import
 import { Container, Row, Col } from 'react-bootstrap';
-import Title from '../Title/Title';
-import AboutImg from '../Image/AboutImg';
+import photo from '../../images/portfolio.png';
 import PortfolioContext from '../../context/context';
 
 const About = () => {
-  const { about } = useContext(PortfolioContext);
-  const { img, paragraphOne, paragraphTwo, paragraphThree, resume } = about;
-
   const [isDesktop, setIsDesktop] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -25,41 +21,49 @@ const About = () => {
   return (
     <section id="about">
       <Container>
-        <Title title="About Me" />
+        <h1 style={{ marginBottom: 30 }}>About Me</h1>
         <Row className="about-wrapper">
           <Col md={6} sm={12}>
-            <Fade bottom duration={1000} delay={600} distance="30px">
+            {/* For the image, 'bottom' becomes direction="down" (or "bottom" in some versions, but "down" is more explicit) */}
+            <Fade direction="down" duration={1000} delay={600} triggerOnce> {/* 'distance' is not directly supported, 'triggerOnce' is good practice */}
               <div className="about-wrapper__image">
-                <AboutImg alt="profile picture" filename={img} />
+                <img src={photo} style={{ maxWidth: '50%', borderRadius: '10px' }} alt="Profile" />
               </div>
             </Fade>
           </Col>
           <Col md={6} sm={12}>
-            <Fade left={isDesktop} bottom={isMobile} duration={1000} delay={1000} distance="30px">
+            {/* Conditional direction based on isDesktop/isMobile */}
+            <Fade
+              direction={isDesktop ? 'left' : 'down'} // 'bottom' becomes 'down'
+              duration={1000}
+              delay={1000}
+              triggerOnce // 'distance' is not directly supported, 'triggerOnce' is good practice
+            >
               <div className="about-wrapper__info">
                 <p className="about-wrapper__info-text">
-                  {paragraphOne ||
-                    'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi neque, ipsa animi maiores repellendu distinctioaperiam earum dolor voluptatum consequatur blanditiis inventore debitis fuga numquam voluptate architecto itaque molestiae.'}
+                  Hello, my name is Reid. I have been developing software &amp; web applications professionally for over 25 years.
                 </p>
                 <p className="about-wrapper__info-text">
-                  {paragraphTwo ||
-                    'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi neque, ipsa animi maiores repellendu distinctioaperiam earum dolor voluptatum consequatur blanditiis inventore debitis fuga numquam voluptate architecto itaque molestiae.'}
+                  Languages: <br /> <br />
+                  <ul>
+                    <li>C# .NET</li>
+                    <li>
+                      JavaScript<br /> <span style={{ fontSize: '0.8em' }}> Vanilla JS, NodeJS / React </span>
+                    </li>
+                    <li>PHP</li>
+                  </ul>
                 </p>
                 <p className="about-wrapper__info-text">
-                  {paragraphThree || 'Lorem ipsum dolor sit, amet consectetur adipisicing elit.'}
+                  Data Tech / Platforms: <br /><br />
+                  <ul>
+                    <li>MS SQL</li>
+                    <li>PostgreSQL</li>
+                    <li>MySQL</li>
+                    <li>
+                      Web APIs <br /> <span style={{ fontSize: '0.8em' }}> GraphQL / REST / JSON </span>
+                    </li>
+                  </ul>
                 </p>
-                {resume && (
-                  <span className="d-flex mt-3">
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="cta-btn cta-btn--resume"
-                      href={resume}
-                    >
-                      Resume
-                    </a>
-                  </span>
-                )}
               </div>
             </Fade>
           </Col>
